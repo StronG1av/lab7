@@ -1,0 +1,124 @@
+<!DOCTYPE html> 
+<html> 
+<head> 
+	<title>Calculator</title> 
+	<style> 
+		table { 
+			border: 1px solid black; 
+			margin-left: auto; 
+			margin-right: auto; 
+		} 
+		
+		input[type="button"] { 
+			width: 100%; 
+			padding: 20px 40px; 
+			background-color: green; 
+			color: white; 
+			font-size: 24px; 
+			font-weight: bold; 
+			border: none; 
+			border-radius: 5px; 
+		} 
+		
+		input[type="text"] { 
+			padding: 20px 30px; 
+			font-size: 24px; 
+			font-weight: bold; 
+			border: none; 
+			border-radius: 5px; 
+			border: 2px solid black; 
+		} 
+	</style> 
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+    var buttons = document.querySelectorAll("#calcu input[type='button']");
+    var result = document.getElementById('result');
+    var operand1 = 0;
+    var operator = '';
+    var clearscreen = false;
+  
+    buttons.forEach(function(button) {
+      button.addEventListener('click', function() {
+        var buttonValue = this.value;
+        if(buttonValue >= '0' && buttonValue <= '9') {
+          if(clearscreen) {
+            result.value = buttonValue;
+            clearscreen = false;
+          } else {
+            result.value += buttonValue;
+          }
+        } else if(buttonValue === '.') {
+          if(result.value.indexOf('.') === -1) {
+            result.value += buttonValue;
+          }
+        } else if(buttonValue === 'c') {
+          result.value = '';
+          operand1 = 0;
+          operator = '';
+        } else if(buttonValue === '=') {
+          var operand2 = parseFloat(result.value);
+          var opvalue;
+          switch(operator) {
+            case '+':
+              opvalue = operand1 + operand2;
+              break;
+            case '-':
+              opvalue = operand1 - operand2;
+              break;
+            case '*':
+              opvalue = operand1 * operand2;
+              break;
+            case '/':
+              opvalue = operand1 / operand2;
+              break;
+            default:
+              opvalue = operand2;
+          }
+          result.value = opvalue;
+          clearscreen = true;
+        } else {
+          operand1 = parseFloat(result.value);
+          operator = buttonValue;
+          clearscreen = true;
+        }
+      });
+    });
+  });
+    </script>
+</head> 
+<body> 
+	<table id="calcu"> 
+		<tr> 
+			<td colspan="3"> 
+				<input type="text" id="result"> 
+			</td> 
+			<td><input type="button" value="c"></td> 
+		</tr> 
+
+		<tr> 
+			<td><input type="button" value="1"></td> 
+			<td><input type="button" value="2"></td> 
+			<td><input type="button" value="3"></td> 
+			<td><input type="button" value="/"></td> 
+		</tr> 
+		<tr> 
+			<td><input type="button" value="4"></td> 
+			<td><input type="button" value="5"></td> 
+			<td><input type="button" value="6"></td> 
+			<td><input type="button" value="*"></td> 
+		</tr> 
+		<tr> 
+			<td><input type="button" value="7"></td> 
+			<td><input type="button" value="8"></td> 
+			<td><input type="button" value="9"></td> 
+			<td><input type="button" value="-"></td> 
+		</tr> 
+		<tr> 
+			<td><input type="button" value="0"></td> 
+			<td><input type="button" value="."></td> 
+			<td><input type="button" value="="></td> 
+			<td><input type="button" value="+"></td> 
+		</tr> 
+	</table> 
+</body> 
+</html> 
